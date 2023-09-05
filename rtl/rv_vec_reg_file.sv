@@ -18,7 +18,9 @@ module rv_vec_reg_file #(
     output logic [VLEN-1:0] rs2_data_o,  // source register 2 data
 
     input  logic [     4:0] rs3_addr_i,  // source register 3 address
-    output logic [VLEN-1:0] rs3_data_o   // source register 3 data
+    output logic [VLEN-1:0] rs3_data_o,  // source register 3 data
+
+    output logic [VLEN-1:0] rs_mask_o  // mask register
 );
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,11 +35,12 @@ module rv_vec_reg_file #(
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   assign rs_addr_i[0] = rs1_addr_i;
-  assign rs1_data_o   = rs_data_o[0];
-  assign rs_addr_i[1] = rs1_addr_i;
-  assign rs1_data_o   = rs_data_o[1];
-  assign rs_addr_i[2] = rs1_addr_i;
-  assign rs1_data_o   = rs_data_o[2];
+  assign rs1_data_o = rs_data_o[0];
+  assign rs_addr_i[1] = rs2_addr_i;
+  assign rs2_data_o = rs_data_o[1];
+  assign rs_addr_i[2] = rs3_addr_i;
+  assign rs3_data_o = rs_data_o[2];
+  assign rs_mask_o = u_reg_file.mux_in[0];
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTLS
