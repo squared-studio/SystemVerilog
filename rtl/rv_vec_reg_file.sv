@@ -40,7 +40,9 @@ module rv_vec_reg_file #(
   assign rs2_data_o = rs_data_o[1];
   assign rs_addr_i[2] = rs3_addr_i;
   assign rs3_data_o = rs_data_o[2];
-  assign rs_mask_o = u_reg_file.mux_in[0];
+  assign rs_mask_o = u_reg_file.g_reg_array[0].register_dut.q_o[0];
+  //assign rs_mask_o = u_reg_file.mux_in[0];
+
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   //-RTLS
