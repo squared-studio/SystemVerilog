@@ -1,30 +1,31 @@
 module reg_group #(
   parameter int TAG_BITS   = 51,
-  parameter int DATA_WIDTH = 1024
+  parameter int DATA_WIDTH = 1024,
+  parameter int CACHE_LINE = 512
 )(
-  input logic clk_i,
-  input logic arst_ni,
-  input logic row_sel,
+  input logic                            clk_i,
+  input logic                            arst_ni,
+  input logic  [$clog2(CACHE_LINE)-1:0 ] row_sel,
 
-  input logic [TAG_BITS-1:0] tag_i,
-  input logic tag_en,
-  output logic [TAG_BITS-1:0] tag,
+  input logic  [TAG_BITS-1:0]            tag_i,
+  input logic                            tag_en,
+  output logic [TAG_BITS-1:0]            tag,
 
-  input logic val_i,
-  input logic val_en,
-  output logic val,
+  input logic                            val_i,
+  input logic                            val_en,
+  output logic                           val,
 
-  input logic dirty_i,
-  input logic dirty_en,
-  output logic dirty,
+  input logic                            dirty_i,
+  input logic                            dirty_en,
+  output logic                           dirty,
 
-  input logic evp_i,
-  input logic evp_en,
-  output logic evp,
+  input logic                            evp_i,
+  input logic                            evp_en,
+  output logic                           evp,
 
-  input logic [DATA_WIDTH/8-1:0][7:0] data_i,
-  input logic [DATA_WIDTH/8:0] data_en,
-  output logic [DATA_WIDTH/8-1:0][7:0] data
+  input logic  [DATA_WIDTH/8-1:0][7:0]   data_i,
+  input logic  [DATA_WIDTH/8-1:0]        data_en,
+  output logic [DATA_WIDTH/8-1:0][7:0]   data
 );
 
   logic tag_en_i;
@@ -38,7 +39,7 @@ module reg_group #(
   assign dirty_en_i = dirty_en & row_sel;
   assign evp_en_i   = evp_en & row_sel;
   assign data_en_i  = data_en & row_sel;
-  
+
   register #(
   .ELEM_WIDTH  (TAG_BITS ),
   .RESET_VALUE ('0)
